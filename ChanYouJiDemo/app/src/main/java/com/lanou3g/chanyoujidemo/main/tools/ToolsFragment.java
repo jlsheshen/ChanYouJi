@@ -1,5 +1,7 @@
 package com.lanou3g.chanyoujidemo.main.tools;
 
+import android.view.View;
+
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.base.BaseFragment;
 
@@ -18,7 +20,8 @@ public class ToolsFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
 
     }
+
 }

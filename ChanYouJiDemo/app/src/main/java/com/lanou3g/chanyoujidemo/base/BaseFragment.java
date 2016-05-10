@@ -46,6 +46,5 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initView(View view);
     protected <T extends View>T bindView(int id){
         return (T)getView().findViewById(id);
-
     }
 }

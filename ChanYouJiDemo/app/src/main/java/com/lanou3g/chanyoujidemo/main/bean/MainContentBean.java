@@ -8,5 +8,7 @@ package com.lanou3g.chanyoujidemo.main.bean;
  */
 public class MainContentBean {
     public int type;
+    public AdBean adBean;
+    public TravelNotesBean travelNotesBean;
 
 }

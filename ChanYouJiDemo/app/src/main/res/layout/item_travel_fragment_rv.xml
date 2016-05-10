@@ -42,18 +42,8 @@
             android:layout_height="match_parent"
             android:id="@+id/item_travel_rv_user_iv"
             android:background="@drawable/shape"
-
-
             />
-
-
     </android.support.v7.widget.CardView>
 
-
-
-
-        
-
-    
 
 </RelativeLayout>

@@ -8,7 +8,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.lanou3g.chanyoujidemo.base.MyApplication;
-import com.lanou3g.chanyoujidemo.main.interface_package.SetBean;
 
 import java.util.ArrayList;
 import java.util.List;

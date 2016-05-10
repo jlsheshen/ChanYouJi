@@ -1,6 +1,10 @@
 package com.lanou3g.chanyoujidemo.main.strategy;
 
 
+import android.view.View;
+
+
+import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.base.BaseFragment;
 
 /**
@@ -20,7 +24,9 @@ public class StrategyFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
 
     }
+
+
 }
