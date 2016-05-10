@@ -1,9 +1,10 @@
-package com.lanou3g.chanyoujidemo;
+package com.lanou3g.chanyoujidemo.base;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 /**
  * Created by ${jl} on 16/5/9.
  */
-public abstract class BaserFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     protected Context context;
 
     @Override
@@ -29,7 +30,7 @@ public abstract class BaserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView();
+        initView(view);
     }
 
     @Override
@@ -38,11 +39,11 @@ public abstract class BaserFragment extends Fragment {
         initData();
     }
 
+    protected abstract int initLayout();
+
     protected abstract void initData();
 
-    protected abstract void initView();
-
-    protected abstract int initLayout();
+    protected abstract void initView(View view);
     protected <T extends View>T bindView(int id){
         return (T)getView().findViewById(id);
 

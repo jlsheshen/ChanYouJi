@@ -1,4 +1,4 @@
-package com.lanou3g.chanyoujidemo;
+package com.lanou3g.chanyoujidemo.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,15 +15,15 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setLayout());
-        initData();
         initView();
+        initData();
     }
+    //绑定布局
+    public abstract int setLayout();
     //加载组件
     protected abstract void initView();
     //写入数据
     protected abstract void initData();
-    //绑定布局
-    public abstract int setLayout();
     //findViewById方法,简化组件的绑定
     protected <T extends View>T bindView(int id){
         return (T)findViewById(id);

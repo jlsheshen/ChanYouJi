@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_travel_rv_background_iv"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/title_padding"
+        android:id="@+id/item_travel_rv_travelname_tv"
+        android:textColor="@color/colorTitleText"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/title_padding"
+        android:id="@+id/item_travel_rv_traveldate_tv"
+        android:layout_below="@id/item_travel_rv_travelname_tv"
+        android:textColor="@color/colorTitleText"
+        />
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/fragment_rv_userhead_size"
+        android:layout_height="@dimen/fragment_rv_userhead_size"
+        app:contentPadding="@dimen/title_padding"
+
+        app:cardCornerRadius="@dimen/title_padding"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        android:background="@color/colorTitleText"
+
+        android:layout_alignParentBottom="true"
+
+        >
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/item_travel_rv_user_iv"
+            android:background="@drawable/shape"
+
+
+            />
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+        
+
+    
+
+</RelativeLayout>
