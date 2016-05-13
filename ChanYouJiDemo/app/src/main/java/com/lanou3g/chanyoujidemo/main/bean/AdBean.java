@@ -5,64 +5,59 @@ package com.lanou3g.chanyoujidemo.main.bean;
  * 广告类
  */
 public class AdBean extends MainContentBean {
-    private String adPosition;
-    private String adImageUrl;
-    private String advertType;
-    private String adPositionContent;
-    private boolean adRotaion;
-    int type = 0;
 
 
+    /**
+     * position : 0
+     * image_url : http://p.chanyouji.cn/203484/1461668985596p1ah945en3pi1mpf1s651d02cvq2.jpg
+     * advert_type : Article
+     * content : 627
+     * rotation : true
+     */
 
+    private String position;
+    private String image_url;
+    private String advert_type;
+    private String content;
+    private boolean rotation;
 
-
-
-
-    public String getAdPosition() {
-        return adPosition;
+    public String getPosition() {
+        return position;
     }
 
-    public AdBean setAdPosition(String adPosition) {
-        this.adPosition = adPosition;
-        return this;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
-    public String getAdImageUrl() {
-        return adImageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public AdBean setAdImageUrl(String adImageUrl) {
-        this.adImageUrl = adImageUrl;
-        return this;
-
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
-    public String getAdvertType() {
-        return advertType;
+    public String getAdvert_type() {
+        return advert_type;
     }
 
-    public AdBean setAdvertType(String advertType) {
-        this.advertType = advertType;
-        return this;
+    public void setAdvert_type(String advert_type) {
+        this.advert_type = advert_type;
     }
 
-    public String getAdPositionContent() {
-        return adPositionContent;
+    public String getContent() {
+        return content;
     }
 
-    public AdBean setAdPositionContent(String adPositionContent) {
-        this.adPositionContent = adPositionContent;
-        return this;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public boolean isAdRotaion() {
-        return adRotaion;
+    public boolean isRotation() {
+        return rotation;
     }
 
-    public AdBean setAdRotaion(boolean adRotaion) {
-        this.adRotaion = adRotaion;
-        return this;
+    public void setRotation(boolean rotation) {
+        this.rotation = rotation;
     }
-
-
 }

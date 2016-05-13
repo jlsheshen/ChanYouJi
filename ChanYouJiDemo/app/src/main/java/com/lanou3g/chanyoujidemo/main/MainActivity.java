@@ -44,6 +44,8 @@ public class MainActivity extends BaseActivity{
         mainAdapter.setFragments(fragmentList);
         viewPager.setAdapter(mainAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     private void initFragment() {

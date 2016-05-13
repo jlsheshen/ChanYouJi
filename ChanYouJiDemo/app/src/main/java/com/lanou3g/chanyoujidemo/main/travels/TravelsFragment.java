@@ -8,15 +8,22 @@ import android.view.View;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.base.BaseFragment;
+import com.lanou3g.chanyoujidemo.base.MyApplication;
 import com.lanou3g.chanyoujidemo.main.MyValuse.MyUrl;
+import com.lanou3g.chanyoujidemo.main.bean.AdBean;
 import com.lanou3g.chanyoujidemo.main.bean.MainContentBean;
 import com.lanou3g.chanyoujidemo.main.bean.TravelNotesBean;
 
+import org.json.JSONArray;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +36,8 @@ public class TravelsFragment extends BaseFragment {
     RecyclerView recyclerView;
     TravelsAdapter travelsAdapter;
     List<TravelNotesBean> traveBeanList;
+    List<AdBean> adBeanList;
+    RequestQueue requestQueue;
 
     @Override
     protected int initLayout() {
@@ -37,70 +46,87 @@ public class TravelsFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        requestQueue = Volley.newRequestQueue(context);
+        travelsAdapter = new TravelsAdapter(context);
 
-
-       // RequestQueue requestQueue = Volley.newRequestQueue(MyApplication.context);
-        traveBeanList = new ArrayList<>();
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(MyUrl.TRAVEL_CONTENT_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TravelsFragment", "-----------" + response);
-                Gson gson = new Gson();
-                traveBeanList = gson.fromJson(response,List.class);
-                Log.d("TravelsFragment", "traveBeanList==null:" + traveBeanList.size());
-
-
-
-                travelsAdapter = new TravelsAdapter(context);
-                recyclerView = bindView(R.id.travels_fragment_rv);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-               // toMainBean(traveBeanList);
-                travelsAdapter.setTravelNotesBeanList(traveBeanList);
-                recyclerView.setAdapter(travelsAdapter);
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("TravelsFragment", "-----------" + error.toString());
-            }
-        });
-        requestQueue.add(stringRequest);
-
+        getTravleAD();
+        Log.d("TravelsFragment", "--------getTravleAD");
+        getTravleContent();
+        Log.d("TravelsFragment", "--------getTravleContent");
 
     }
-
-
-
 
     @Override
     protected void initView(View view) {
         recyclerView = bindView(R.id.travels_fragment_rv);
 
-
-
     }
 
-    public List<MainContentBean> toMainBean(List<TravelNotesBean> list){
-        Log.d("TravelsFragment", "traveBeanList==null:" + (traveBeanList == null));
-//        for (TravelNotesBean travelNotesBean : traveBeanList) {
-//            mainContentBeanList.add(travelNotesBean);
-//        }
-            mainContentBeanList = new ArrayList<>();
-        for(int i = 0;i<traveBeanList.size();i++){
+    public void getTravleContent() {
+        traveBeanList = new ArrayList<>();
 
-            MainContentBean mainContentBean = new MainContentBean();
-            TravelNotesBean travelNotesBean= traveBeanList.get(i);
-            mainContentBean.travelNotesBean = travelNotesBean;
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(MyUrl.TRAVEL_CONTENT_URL, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
 
-            mainContentBeanList.add(mainContentBean.travelNotesBean);
-            Log.d("TravelsFragment", "+++++" + mainContentBeanList.get(i).travelNotesBean.getDays());
-        }
+                Gson gson = new Gson();
+
+                Type type = new TypeToken<ArrayList<TravelNotesBean>>() {
+                }.getType();
+
+                traveBeanList = gson.fromJson(String.valueOf(response), type);
 
 
-        return mainContentBeanList;
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                Log.d("TravelsFragment", "traveBeanList.size():" + traveBeanList.size());
+                traveBeanList.add(0, null);
+                traveBeanList.add(3, null);
+                Log.d("TravelsFragment", "traveBeanList.size():" + traveBeanList.size());
+
+                travelsAdapter.setTravelNotesBeanList(traveBeanList);
+
+                recyclerView.setAdapter(travelsAdapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+
+    }
+    public void getTravleAD() {
+        adBeanList = new ArrayList<>();
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(MyUrl.TRAVEL_AD_URL, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                Gson gson = new Gson();
+
+                Type type = new TypeToken<ArrayList<AdBean>>() {
+                }.getType();
+
+
+                adBeanList = gson.fromJson(String.valueOf(response), type);
+                Log.d("TravelsFragment", "--------adBeanList = gson.fromJson(String.valueOf(response), type)");
+
+                travelsAdapter.setAdBeanList(adBeanList);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("TravelsFragment", "--------error");
+
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+
     }
 
 

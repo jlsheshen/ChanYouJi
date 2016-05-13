@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_margin="@dimen/cardview_default_elevation"
+            android:id="@+id/item_travel_ad_rv_left_iv"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_margin="@dimen/cardview_default_elevation"
+            android:id="@+id/item_travel_ad_rv_right_iv"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+
+</FrameLayout>
