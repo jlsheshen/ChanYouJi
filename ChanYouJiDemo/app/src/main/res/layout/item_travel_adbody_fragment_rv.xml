@@ -11,7 +11,7 @@
         >
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="110dp"
+            android:layout_height="@dimen/travel_ad_image_height"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:layout_margin="@dimen/cardview_default_elevation"
@@ -19,7 +19,7 @@
             />
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="110dp"
+            android:layout_height="@dimen/travel_ad_image_height"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:layout_margin="@dimen/cardview_default_elevation"

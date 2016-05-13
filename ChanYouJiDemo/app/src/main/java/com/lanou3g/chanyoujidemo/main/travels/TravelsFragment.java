@@ -9,13 +9,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.base.BaseFragment;
-import com.lanou3g.chanyoujidemo.base.MyApplication;
 import com.lanou3g.chanyoujidemo.main.MyValuse.MyUrl;
 import com.lanou3g.chanyoujidemo.main.bean.AdBean;
 import com.lanou3g.chanyoujidemo.main.bean.MainContentBean;
@@ -50,9 +48,10 @@ public class TravelsFragment extends BaseFragment {
         travelsAdapter = new TravelsAdapter(context);
 
         getTravleAD();
-        Log.d("TravelsFragment", "--------getTravleAD");
+
         getTravleContent();
-        Log.d("TravelsFragment", "--------getTravleContent");
+
+
 
     }
 
@@ -79,10 +78,8 @@ public class TravelsFragment extends BaseFragment {
 
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                Log.d("TravelsFragment", "traveBeanList.size():" + traveBeanList.size());
                 traveBeanList.add(0, null);
                 traveBeanList.add(3, null);
-                Log.d("TravelsFragment", "traveBeanList.size():" + traveBeanList.size());
 
                 travelsAdapter.setTravelNotesBeanList(traveBeanList);
 
@@ -112,7 +109,7 @@ public class TravelsFragment extends BaseFragment {
 
 
                 adBeanList = gson.fromJson(String.valueOf(response), type);
-                Log.d("TravelsFragment", "--------adBeanList = gson.fromJson(String.valueOf(response), type)");
+
 
                 travelsAdapter.setAdBeanList(adBeanList);
 
@@ -120,7 +117,7 @@ public class TravelsFragment extends BaseFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("TravelsFragment", "--------error");
+
 
 
             }

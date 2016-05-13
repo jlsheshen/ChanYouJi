@@ -2,7 +2,6 @@ package com.lanou3g.chanyoujidemo.main.travels;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,24 +18,20 @@ import com.android.volley.toolbox.Volley;
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.main.bean.AdBean;
 import com.lanou3g.chanyoujidemo.main.bean.TravelNotesBean;
-import com.panxw.android.imageindicator.ImageIndicatorView;
+import com.lanou3g.chanyoujidemo.main.util.ScreenUtils;
+import com.lanou3g.chanyoujidemo.main.view.SlidingAdView;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ${jl} on 16/5/10.
  */
-public class TravelsAdapter extends RecyclerView.Adapter {
+public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdView.SlidingListener{
    // List<MainContentBean> mainContentBeanList;
     Context context;
     List<TravelNotesBean> travelNotesBeanList;
     List<AdBean> adBeanList;
-    int adPos = 0;
+    private SlidingAdView slidingAdView;
 
     public void setTravelNotesBeanList(List<TravelNotesBean> travelNotesBeanList) {
 
@@ -48,23 +43,13 @@ public class TravelsAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
-//    public void setMainContentBeanList(List<MainContentBean> mainContentBeanList) {
-//        this.mainContentBeanList = mainContentBeanList;
-//        Log.d("TravelsFragment", "-----------数据传输到adapter" );
-//        notifyDataSetChanged();
-//    }
-
-
     public void setAdBeanList(List<AdBean> adBeanList) {
         this.adBeanList = adBeanList;
-      //  notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("TravelsAdapter", "--------------getItemViewType" + position);
-
-
         if (travelNotesBeanList.get(position ) != null){
             return 1;
         } else if (position == 0){
@@ -77,7 +62,7 @@ public class TravelsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        RecyclerView.ViewHolder holder = null;
-        Log.d("TravelsAdapter", "travelNotesBeanList.get(position):  viewType = " + viewType);
+
 
         switch (viewType){
             case 1:
@@ -119,22 +104,28 @@ public class TravelsAdapter extends RecyclerView.Adapter {
                 getImage(travelNotesBean.getFront_cover_photo_url(),travelViedHolder.backgroundIv);
                 getImage(travelNotesBean.getUser().getImage(),travelViedHolder.userIv);
 
-                Log.d("TravelsAdapter", travelNotesBean.getFront_cover_photo_url());
-                Log.d("TravelsAdapter", travelNotesBean.getUser().getImage());
+
                 break;
             case 2:
-                AdBean adBean = adBeanList.get(0);
 
 
                 AdHeadViewHolder adHeadViewHolder = (AdHeadViewHolder) holder;
 
+                final ViewGroup.LayoutParams layoutParams  = adHeadViewHolder.fristAdIv.getLayoutParams();
+
+                layoutParams.width = ScreenUtils.getScreenWidth(context);
+                adHeadViewHolder.fristAdIv.setLayoutParams(layoutParams);
+                adHeadViewHolder.secondAdIv.setLayoutParams(layoutParams);
 
 
-                getImage(adBean.getImage_url(),adHeadViewHolder.adIv);
+
+                getImage(adBeanList.get(0).getImage_url(),adHeadViewHolder.fristAdIv);
+
+                getImage(adBeanList.get(1).getImage_url(),adHeadViewHolder.secondAdIv);
                 break;
 
             case 3:
-                adBean = adBeanList.get(2);
+                AdBean adBean = adBeanList.get(2);
                 AdBodyViewHolder adBodyViewHolder = (AdBodyViewHolder) holder;
                 getImage(adBean.getImage_url(),adBodyViewHolder.leftIv);
                 adBean = adBeanList.get(3);
@@ -145,7 +136,7 @@ public class TravelsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.d("TravelsFragment", "-----------getItemCount" + travelNotesBeanList.size());
+
         return travelNotesBeanList == null? 0:travelNotesBeanList.size();
     }
 
@@ -168,6 +159,24 @@ public class TravelsAdapter extends RecyclerView.Adapter {
 
     }
 
+    @Override
+    public void onMove(SlidingAdView slidingAdView) {
+        if (this.slidingAdView != slidingAdView){
+            if (this.slidingAdView != null){
+
+                this.slidingAdView.returnView();
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onTwoView(SlidingAdView slidingAdView) {
+        this.slidingAdView = slidingAdView;
+
+    }
+
     class TravelViewHolder extends RecyclerView.ViewHolder{
         TextView nameTv,dateTv;
         ImageView backgroundIv,userIv;
@@ -182,11 +191,14 @@ public class TravelsAdapter extends RecyclerView.Adapter {
         }
     }
     class AdHeadViewHolder extends RecyclerView.ViewHolder{
-        ImageView adIv;
+        ImageView fristAdIv,secondAdIv;
         public AdHeadViewHolder(View itemView) {
             super(itemView);
 
-            adIv = (ImageView) itemView.findViewById(R.id.item_travel_rv_head_iv);
+            fristAdIv = (ImageView) itemView.findViewById(R.id.item_travel_ad_head_frist_iv);
+            secondAdIv = (ImageView) itemView.findViewById(R.id.item_travel_ad_head_second_iv);
+
+            ((SlidingAdView)itemView).setSlidingListener(TravelsAdapter.this,context);
 
         }
     }
