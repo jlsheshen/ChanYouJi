@@ -2,7 +2,6 @@ package com.lanou3g.chanyoujidemo.main.travels;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.android.volley.RequestQueue;
@@ -16,7 +15,7 @@ import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.base.BaseFragment;
 import com.lanou3g.chanyoujidemo.main.MyValuse.MyUrl;
 import com.lanou3g.chanyoujidemo.main.bean.AdBean;
-import com.lanou3g.chanyoujidemo.main.bean.MainContentBean;
+
 import com.lanou3g.chanyoujidemo.main.bean.TravelNotesBean;
 
 import org.json.JSONArray;
@@ -30,12 +29,15 @@ import java.util.List;
  * 游记页面
  */
 public class TravelsFragment extends BaseFragment {
-    List<MainContentBean> mainContentBeanList;
     RecyclerView recyclerView;
     TravelsAdapter travelsAdapter;
     List<TravelNotesBean> traveBeanList;
     List<AdBean> adBeanList;
     RequestQueue requestQueue;
+
+
+
+
 
     @Override
     protected int initLayout() {
@@ -50,7 +52,6 @@ public class TravelsFragment extends BaseFragment {
         getTravleAD();
 
         getTravleContent();
-
 
 
     }
@@ -76,7 +77,6 @@ public class TravelsFragment extends BaseFragment {
                 traveBeanList = gson.fromJson(String.valueOf(response), type);
 
 
-
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 traveBeanList.add(0, null);
                 traveBeanList.add(3, null);
@@ -94,6 +94,7 @@ public class TravelsFragment extends BaseFragment {
         requestQueue.add(jsonArrayRequest);
 
     }
+
     public void getTravleAD() {
         adBeanList = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -107,9 +108,7 @@ public class TravelsFragment extends BaseFragment {
                 Type type = new TypeToken<ArrayList<AdBean>>() {
                 }.getType();
 
-
                 adBeanList = gson.fromJson(String.valueOf(response), type);
-
 
                 travelsAdapter.setAdBeanList(adBeanList);
 
@@ -118,13 +117,20 @@ public class TravelsFragment extends BaseFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-
-
             }
         });
         requestQueue.add(jsonArrayRequest);
-
     }
 
+    @Override
+    public void onPause() {
+        travelsAdapter.setAdHead();
+        super.onPause();
+    }
 
+    @Override
+    public void onDestroy() {
+        travelsAdapter.setAdHead();
+        super.onDestroy();
+    }
 }

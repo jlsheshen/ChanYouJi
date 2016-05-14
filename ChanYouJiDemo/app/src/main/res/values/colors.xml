@@ -7,4 +7,5 @@
     <color name="tablayoutUnderline">#0066ff</color>
     <color name="colorTitleText">#ffffff</color>
     <color name="titleBackground">#0066ff</color>
+    <color name="colorTextBackground">#000000</color>
 </resources>

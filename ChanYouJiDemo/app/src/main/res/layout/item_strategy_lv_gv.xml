@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:padding="@dimen/cardview_default_elevation"
+
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/travel_bacground_image_height"
+        android:id="@+id/strategy_lv_gv_bacground_iv"
+        android:scaleType="centerCrop"
+
+        />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/strategy_lv_gv_chinese_tv"
+        android:textColor="@color/colorTitleText"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/strategy_lv_gv_english_tv"
+        android:layout_below="@id/strategy_lv_gv_chinese_tv"
+        android:textColor="@color/colorTitleText"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/strategy_lv_gv_count_tv"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/strategy_lv_gv_bacground_iv"
+        android:textColor="@color/colorTitleText"
+        android:background="@color/colorTextBackground"
+        android:alpha="0.6"
+        />
+
+
+</RelativeLayout>

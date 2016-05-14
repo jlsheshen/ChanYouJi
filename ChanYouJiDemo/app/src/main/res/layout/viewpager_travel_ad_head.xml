@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/travel_bacground_image_height"
+        android:id="@+id/viewpager_travel_ad_head_iv"
+        android:scaleType="centerCrop"
+        />
+
+</FrameLayout>

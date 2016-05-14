@@ -2,6 +2,9 @@ package com.lanou3g.chanyoujidemo.main.travels;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,20 +21,26 @@ import com.android.volley.toolbox.Volley;
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.main.bean.AdBean;
 import com.lanou3g.chanyoujidemo.main.bean.TravelNotesBean;
-import com.lanou3g.chanyoujidemo.main.util.ScreenUtils;
-import com.lanou3g.chanyoujidemo.main.view.SlidingAdView;
 
+
+import java.util.ArrayList;
 import java.util.List;
+
+import it.sephiroth.android.library.picasso.Picasso;
 
 /**
  * Created by ${jl} on 16/5/10.
  */
-public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdView.SlidingListener{
+public class TravelsAdapter extends RecyclerView.Adapter{
    // List<MainContentBean> mainContentBeanList;
     Context context;
     List<TravelNotesBean> travelNotesBeanList;
     List<AdBean> adBeanList;
-    private SlidingAdView slidingAdView;
+    List<String> adHeadList;
+    List<AdBean> adBodyList;
+    public boolean adHead;
+
+
 
     public void setTravelNotesBeanList(List<TravelNotesBean> travelNotesBeanList) {
 
@@ -41,10 +50,25 @@ public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdVie
 
     public TravelsAdapter(Context context) {
         this.context = context;
+        adHead = true;
     }
 
     public void setAdBeanList(List<AdBean> adBeanList) {
         this.adBeanList = adBeanList;
+        adHeadList = new ArrayList<>();
+        adBodyList = new ArrayList<>();
+        for (AdBean adBean : adBeanList) {
+
+            if (adBean.isRotation()){
+
+                adHeadList.add(adBean.getImage_url());
+            }else {
+
+                adBodyList.add(adBean);
+            }
+
+        }
+
         notifyDataSetChanged();
     }
 
@@ -86,50 +110,49 @@ public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdVie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         int type= getItemViewType(position);
-        Log.d("TravelsAdapter", "travelNotesBeanList.get(position):  type = " + type);
         switch (type){
             case 1:
                 final TravelNotesBean travelNotesBean = travelNotesBeanList.get(position);
-               // Log.d("TravelsAdapter", "travelNotesBean:" + travelNotesBean);
-//                List<TravelNotesBean> travelNotesBeen = new ArrayList<>();
-//                travelNotesBeen.add(travelNotesBeanList.get(position));
                 final TravelViewHolder travelViedHolder = (TravelViewHolder) holder;
-
                 travelViedHolder.nameTv.setText(travelNotesBean.getName().toString());
 
                 travelViedHolder.dateTv.setText(travelNotesBean.getStart_date() + "/" +
                         travelNotesBean.getDays() + "天," +
                         travelNotesBean.getPhotos_count() + "图");
 
-                getImage(travelNotesBean.getFront_cover_photo_url(),travelViedHolder.backgroundIv);
-                getImage(travelNotesBean.getUser().getImage(),travelViedHolder.userIv);
+                Picasso.with(context).load(travelNotesBean.getFront_cover_photo_url()).into(travelViedHolder.backgroundIv);
+                Picasso.with(context).load(travelNotesBean.getUser().getImage()).into(travelViedHolder.userIv);
+
 
 
                 break;
             case 2:
 
+                final AdHeadViewHolder adHeadViewHolder = (AdHeadViewHolder) holder;
 
-                AdHeadViewHolder adHeadViewHolder = (AdHeadViewHolder) holder;
+                AdHeadAdapter adHeadAdapter = new AdHeadAdapter(context);
 
-                final ViewGroup.LayoutParams layoutParams  = adHeadViewHolder.fristAdIv.getLayoutParams();
+                adHeadAdapter.setUrls(adHeadList);
 
-                layoutParams.width = ScreenUtils.getScreenWidth(context);
-                adHeadViewHolder.fristAdIv.setLayoutParams(layoutParams);
-                adHeadViewHolder.secondAdIv.setLayoutParams(layoutParams);
+                adHeadViewHolder.viewPager.setAdapter(adHeadAdapter);
+                adHeadViewHolder.tabLayout.setupWithViewPager(adHeadViewHolder.viewPager);
+
+                new ViewPagerTask().execute(adHeadViewHolder);
+
+                for (int i = 0 ;i< adHeadList.size();i++) {
+
+                    adHeadViewHolder.tabLayout.getTabAt(i).setIcon(R.drawable.travel_ad_head_selector);
+                }
 
 
-
-                getImage(adBeanList.get(0).getImage_url(),adHeadViewHolder.fristAdIv);
-
-                getImage(adBeanList.get(1).getImage_url(),adHeadViewHolder.secondAdIv);
                 break;
 
             case 3:
-                AdBean adBean = adBeanList.get(2);
+
                 AdBodyViewHolder adBodyViewHolder = (AdBodyViewHolder) holder;
-                getImage(adBean.getImage_url(),adBodyViewHolder.leftIv);
-                adBean = adBeanList.get(3);
-                getImage(adBean.getImage_url(),adBodyViewHolder.rightIv);
+                Picasso.with(context).load(adBodyList.get(0).getImage_url()).into(adBodyViewHolder.leftIv);
+                Picasso.with(context).load(adBodyList.get(1).getImage_url()).into(adBodyViewHolder.rightIv);
+
                 break;
         }
     }
@@ -159,23 +182,7 @@ public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdVie
 
     }
 
-    @Override
-    public void onMove(SlidingAdView slidingAdView) {
-        if (this.slidingAdView != slidingAdView){
-            if (this.slidingAdView != null){
 
-                this.slidingAdView.returnView();
-            }
-
-        }
-
-    }
-
-    @Override
-    public void onTwoView(SlidingAdView slidingAdView) {
-        this.slidingAdView = slidingAdView;
-
-    }
 
     class TravelViewHolder extends RecyclerView.ViewHolder{
         TextView nameTv,dateTv;
@@ -191,14 +198,13 @@ public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdVie
         }
     }
     class AdHeadViewHolder extends RecyclerView.ViewHolder{
-        ImageView fristAdIv,secondAdIv;
+        ViewPager viewPager;
+        TabLayout tabLayout;
         public AdHeadViewHolder(View itemView) {
             super(itemView);
-
-            fristAdIv = (ImageView) itemView.findViewById(R.id.item_travel_ad_head_frist_iv);
-            secondAdIv = (ImageView) itemView.findViewById(R.id.item_travel_ad_head_second_iv);
-
-            ((SlidingAdView)itemView).setSlidingListener(TravelsAdapter.this,context);
+            viewPager = (ViewPager) itemView.findViewById(R.id.item_travel_ad_rv_head_vp);
+            tabLayout = (TabLayout) itemView.findViewById(R.id.item_travel_ad_rv_head_tab);
+            viewPager.setCurrentItem(0);
 
         }
     }
@@ -212,4 +218,48 @@ public class TravelsAdapter extends RecyclerView.Adapter implements SlidingAdVie
 
         }
     }
+    class ViewPagerTask extends AsyncTask<AdHeadViewHolder,Integer,Void>{
+        int currentItem = 0;
+        ViewPager vp;
+
+
+
+        @Override
+        protected Void doInBackground(AdHeadViewHolder... params) {
+            vp = params[0].viewPager;
+            while (adHead){
+
+            try {
+                Thread.sleep(5000);
+                Log.d("ViewPagerTask", "------------------");
+                currentItem = (currentItem + 1)%adHeadList.size();
+                publishProgress(currentItem);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            }return null;
+
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            vp.setCurrentItem(values[0]);
+        }
+
+    }
+    public void setAdHead(){
+        adHead = false;
+
+    }
+
+
+
+
+
+
+
 }
