@@ -29,6 +29,7 @@
         android:id="@+id/item_travel_rv_traveldate_tv"
         android:layout_below="@id/item_travel_rv_travelname_tv"
         android:textColor="@color/colorTitleText"
+
         />
     <android.support.v7.widget.CardView
         android:layout_width="@dimen/fragment_rv_userhead_size"

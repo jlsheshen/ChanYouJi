@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".main.MainActivity">
-
-    <include layout="@layout/include_main_title" />
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_other_title"/>
     <android.support.design.widget.TabLayout
-        android:id="@+id/main_aty_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/man_aty_tablayout"
         app:tabIndicatorColor="@color/tablayoutUnderline"
-        app:tabSelectedTextColor="@color/tablayoutSelectText" />
-
+        app:tabSelectedTextColor="@color/tablayoutSelectText"
+        >
+    </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
-        android:id="@+id/main_aty_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:id="@+id/man_aty_viewpager"
+        ></android.support.v4.view.ViewPager>
 
 </LinearLayout>

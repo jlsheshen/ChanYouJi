@@ -1,10 +1,12 @@
 package com.lanou3g.chanyoujidemo.main;
 
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 
 import com.lanou3g.chanyoujidemo.R;
@@ -12,13 +14,14 @@ import com.lanou3g.chanyoujidemo.base.BaseActivity;
 import com.lanou3g.chanyoujidemo.main.strategy.StrategyFragment;
 import com.lanou3g.chanyoujidemo.main.tools.ToolsFragment;
 import com.lanou3g.chanyoujidemo.main.travels.TravelsFragment;
+import com.lanou3g.chanyoujidemo.man.ManActivity;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity implements View.OnClickListener{
     List<Fragment> fragmentList;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -33,8 +36,9 @@ public class MainActivity extends BaseActivity{
 
     @Override
     protected void initView() {
-        tabLayout = bindView(R.id.main_aty_tablelayout);
+        tabLayout = bindView(R.id.main_aty_tablayout);
         viewPager = bindView(R.id.main_aty_viewpager);
+       findViewById(R.id.main_title_login).setOnClickListener(this);
     }
 
     @Override
@@ -56,4 +60,16 @@ public class MainActivity extends BaseActivity{
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.main_title_login:
+            Intent toManIntent = new Intent(this, ManActivity.class);
+                startActivity(toManIntent);
+                break;
+
+
+
+        }
+    }
 }

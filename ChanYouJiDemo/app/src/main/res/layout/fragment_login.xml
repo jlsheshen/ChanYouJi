@@ -2,11 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.lanou3g.chanyoujidemo.main.view.MainListView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/item_travel_detail_two_lv"
-        />
+        android:id="@+id/login_fragment_name_et"
+        android:hint="@string/login_hint_name"
 
+        />
+   <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/login_fragment_password_et"
+    android:hint="@string/login_hint_password"
+    />
 
 </LinearLayout>

@@ -9,5 +9,6 @@
     <dimen name="line_height">2dp</dimen>
     <dimen name="travel_bacground_image_height">220dp</dimen>
     <dimen name="travel_ad_image_height">110dp</dimen>
+    <dimen name="tools_image_padding">30dp</dimen>
 
 </resources>

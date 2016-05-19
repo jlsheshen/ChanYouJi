@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.main.bean.StrategyBean;
-import com.lanou3g.chanyoujidemo.main.util.ScreenUtils;
+import com.lanou3g.chanyoujidemo.util.ScreenUtils;
 
 import java.util.List;
 
 import it.sephiroth.android.library.picasso.Picasso;
 
 /**
+ *
  * Created by ${jl} on 16/5/14.
  */
 public class StrategyGridAdapter extends BaseAdapter {

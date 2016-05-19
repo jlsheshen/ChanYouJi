@@ -1,6 +1,7 @@
 package com.lanou3g.chanyoujidemo.main.strategy;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,16 +11,13 @@ import android.widget.ListView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.base.BaseFragment;
+import com.lanou3g.chanyoujidemo.base.SingleRequestQueue;
 import com.lanou3g.chanyoujidemo.main.MyValuse.MyUrl;
 import com.lanou3g.chanyoujidemo.main.bean.StrategyBean;
-
-import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -35,6 +33,7 @@ public class StrategyFragment extends BaseFragment {
     List<StrategyBean> strategyBeanList;
     RequestQueue requestQueue;
     StrategyAdapter steategyAdapter;
+    public static final String STRATEGY_TAG = "strategyTag";
     @Override
     protected int initLayout() {
         return R.layout.fragment_strategy;
@@ -44,15 +43,8 @@ public class StrategyFragment extends BaseFragment {
     protected void initData() {
         requestQueue = Volley.newRequestQueue(context);
         steategyAdapter  = new StrategyAdapter(context);
-
         getStrategyData();
-
-        steategyAdapter.setStrategyBeanList(strategyBeanList);
         listView.setAdapter(steategyAdapter);
-
-
-
-
 
     }
 
@@ -65,24 +57,35 @@ public class StrategyFragment extends BaseFragment {
 
     }
 
-
     public void getStrategyData() {
-        strategyBeanList = new ArrayList<>();
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(MyUrl.STRATEGY_CONTENT_URL, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Gson gson = new Gson();
-                Type type = new TypeToken<ArrayList<StrategyBean>>() {
-                }.getType();
-                strategyBeanList = gson.fromJson(String.valueOf(response),type);
-                steategyAdapter.setStrategyBeanList(strategyBeanList);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
+        //先创建type为ArrayList的子类,
+        final Type type = new TypeToken<ArrayList<StrategyBean>>() {
+        }.getType();
+
+        SingleRequestQueue.getInstance().addArrayRequest(MyUrl.STRATEGY_CONTENT_URL, type,
+                new Response.Listener<ArrayList<StrategyBean>>() {
+                    @Override
+                    public void onResponse(ArrayList<StrategyBean> response) {
+                        //将获取下来的response未做数据,直接set进adapter中
+                        steategyAdapter.setStrategyBeanList(response);
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("StrategyFragment", error.toString());
+
+                    }
+                },STRATEGY_TAG);
+
+    }
+
+    @Override
+    public void onStop() {
+        //在页面停止的时候,按照TAG将其移除
+        SingleRequestQueue.getInstance().removeRequest(STRATEGY_TAG);
+
+        super.onStop();
     }
 }

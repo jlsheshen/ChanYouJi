@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/treavel_detail_aty_ev"
+        ></ExpandableListView>
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="@dimen/fragment_rv_userhead_size"
+        android:layout_height="@dimen/fragment_rv_userhead_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/activity_tabLayout_underline_height"
+        android:src="@drawable/selector_travel_detail_popup_btn"
+        android:id="@+id/detail_activity_popup_btn"
+        />
+
+</RelativeLayout>

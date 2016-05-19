@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.main.bean.StrategyBean;
-import com.lanou3g.chanyoujidemo.main.util.ScreenUtils;
+import com.lanou3g.chanyoujidemo.util.ScreenUtils;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class StrategyAdapter extends BaseAdapter {
 
         viewHolder.gridView.setAdapter(strategyGridAdapter);
 
-        viewHolder.textView.setText(area[position]);
+        viewHolder.textView.setText(area[position].toString());
 
         return convertView;
     }

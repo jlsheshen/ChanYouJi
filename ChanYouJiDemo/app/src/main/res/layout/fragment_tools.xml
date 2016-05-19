@@ -3,4 +3,65 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="200"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:padding="@dimen/tools_image_padding">
+            <ImageView
+                android:layout_width="@dimen/fragment_rv_userhead_size"
+                android:layout_height="@dimen/fragment_rv_userhead_size"
+                android:id="@+id/tools_fragment_translation_iv"
+                android:src="@drawable/selector_tools_translation"
+                android:clickable="true"
+
+
+                />
+            <ImageView
+                android:layout_width="@dimen/fragment_rv_userhead_size"
+                android:layout_height="@dimen/fragment_rv_userhead_size"
+                android:id="@+id/tools_fragment_books_iv"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/selector_tools_books"
+                android:clickable="true"
+
+
+                />
+            <ImageView
+                android:layout_width="@dimen/fragment_rv_userhead_size"
+                android:layout_height="@dimen/fragment_rv_userhead_size"
+                android:id="@+id/tools_fragment_map_iv"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/selector_tools_map"
+                android:clickable="true"
+
+                />
+            <ImageView
+                android:layout_width="@dimen/fragment_rv_userhead_size"
+                android:layout_height="@dimen/fragment_rv_userhead_size"
+                android:id="@+id/tools_fragment_exchange_rate_iv"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/selector_tools_exchange_rate"
+                android:clickable="true"
+
+                />
+
+
+        </RelativeLayout>
+
+
 </LinearLayout>

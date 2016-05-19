@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_title_text_size"
+
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_travel_detail_three_tv"
+
+        />
+
+    <com.lanou3g.chanyoujidemo.main.view.RecyclerOrListImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:id="@+id/item_travel_detail_three_iv"
+        android:adjustViewBounds="true"
+        android:layout_below="@id/item_travel_detail_three_tv"
+        />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_travel_detail_addrss"
+            android:id="@+id/item_travel_detail_three_adress_btn"
+            android:layout_below="@id/item_travel_detail_three_iv"
+            android:paddingLeft="@dimen/activity_title_text_size"
+            android:minWidth="@dimen/tools_image_padding"
+
+            />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/cardview_default_radius"
+        android:drawableLeft="@mipmap/like_a"
+        android:id="@+id/item_travel_detail_three_like_btn"
+        android:layout_below="@id/item_travel_detail_three_iv"
+        android:layout_alignParentRight="true"
+
+
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/cardview_default_radius"
+        android:drawableLeft="@mipmap/comment_b"
+        android:id="@+id/item_travel_detail_three_say_btn"
+        android:layout_below="@id/item_travel_detail_three_iv"
+        android:layout_toLeftOf="@id/item_travel_detail_three_like_btn"
+        />
+
+
+
+</RelativeLayout>

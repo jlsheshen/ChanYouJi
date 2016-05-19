@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ChanYouJiDemo</string>
-    <string name="title_text">蟬遊記</string>
+
+    <string name="login_hint_name">电子邮箱</string>
+    <string name="login_hint_password">密码</string>
 </resources>

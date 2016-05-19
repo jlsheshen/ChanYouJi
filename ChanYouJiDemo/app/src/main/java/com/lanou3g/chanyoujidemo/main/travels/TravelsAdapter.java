@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.lanou3g.chanyoujidemo.R;
 import com.lanou3g.chanyoujidemo.main.bean.AdBean;
 import com.lanou3g.chanyoujidemo.main.bean.TravelNotesBean;
+import com.lanou3g.chanyoujidemo.util.OnClickTravelItemListener;
 
 
 import java.util.ArrayList;
@@ -39,8 +40,11 @@ public class TravelsAdapter extends RecyclerView.Adapter{
     List<String> adHeadList;
     List<AdBean> adBodyList;
     public boolean adHead;
+    OnClickTravelItemListener onClickTravelItemListener;
 
-
+    public void setOnClickTravelItemListene(OnClickTravelItemListener onClickTravelItemListener) {
+        this.onClickTravelItemListener = onClickTravelItemListener;
+    }
 
     public void setTravelNotesBeanList(List<TravelNotesBean> travelNotesBeanList) {
 
@@ -122,6 +126,14 @@ public class TravelsAdapter extends RecyclerView.Adapter{
 
                 Picasso.with(context).load(travelNotesBean.getFront_cover_photo_url()).into(travelViedHolder.backgroundIv);
                 Picasso.with(context).load(travelNotesBean.getUser().getImage()).into(travelViedHolder.userIv);
+                travelViedHolder.backgroundIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickTravelItemListener.getUrlString(travelNotesBean.getId());
+
+                    }
+                });
+
 
 
 
@@ -129,22 +141,15 @@ public class TravelsAdapter extends RecyclerView.Adapter{
             case 2:
 
                 final AdHeadViewHolder adHeadViewHolder = (AdHeadViewHolder) holder;
-
                 AdHeadAdapter adHeadAdapter = new AdHeadAdapter(context);
-
                 adHeadAdapter.setUrls(adHeadList);
-
                 adHeadViewHolder.viewPager.setAdapter(adHeadAdapter);
                 adHeadViewHolder.tabLayout.setupWithViewPager(adHeadViewHolder.viewPager);
-
                 new ViewPagerTask().execute(adHeadViewHolder);
 
                 for (int i = 0 ;i< adHeadList.size();i++) {
-
                     adHeadViewHolder.tabLayout.getTabAt(i).setIcon(R.drawable.travel_ad_head_selector);
                 }
-
-
                 break;
 
             case 3:
@@ -164,23 +169,23 @@ public class TravelsAdapter extends RecyclerView.Adapter{
     }
 
 
-    public void getImage(String path, final ImageView imageView){
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        ImageRequest imageRequest = new ImageRequest(path, new Response.Listener<Bitmap>() {
-
-            @Override
-            public void onResponse(Bitmap response) {
-                imageView.setImageBitmap(response);
-            }
-        }, 0, 0, Bitmap.Config.ALPHA_8, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(imageRequest);
-
-    }
+//    public void getImage(String path, final ImageView imageView){
+//        RequestQueue requestQueue = Volley.newRequestQueue(context);
+//        ImageRequest imageRequest = new ImageRequest(path, new Response.Listener<Bitmap>() {
+//
+//            @Override
+//            public void onResponse(Bitmap response) {
+//                imageView.setImageBitmap(response);
+//            }
+//        }, 0, 0, Bitmap.Config.ALPHA_8, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        requestQueue.add(imageRequest);
+//
+//    }
 
 
 
@@ -222,8 +227,6 @@ public class TravelsAdapter extends RecyclerView.Adapter{
         int currentItem = 0;
         ViewPager vp;
 
-
-
         @Override
         protected Void doInBackground(AdHeadViewHolder... params) {
             vp = params[0].viewPager;
@@ -231,7 +234,7 @@ public class TravelsAdapter extends RecyclerView.Adapter{
 
             try {
                 Thread.sleep(5000);
-                Log.d("ViewPagerTask", "------------------");
+
                 currentItem = (currentItem + 1)%adHeadList.size();
                 publishProgress(currentItem);
 
@@ -251,9 +254,8 @@ public class TravelsAdapter extends RecyclerView.Adapter{
         }
 
     }
-    public void setAdHead(){
+    public void setAdHeadBoolean(){
         adHead = false;
-
     }
 
 
